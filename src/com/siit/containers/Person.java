@@ -5,12 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Person implements Comparable<Person> {
+public class Person /*implements Comparable<Person>*/ {
 
     private String name;
     private int age;
     private String CNP;
     private List<String> hobbies = new ArrayList<>();
+    private List<Hobby> hobbyList = new ArrayList<>();
 
     public Person(String name, int age) {
         this.name = name;
@@ -25,7 +26,7 @@ public class Person implements Comparable<Person> {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
@@ -73,12 +74,12 @@ public class Person implements Comparable<Person> {
         return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
-                ", CNP='" + CNP + '\'' +
                 '}';
     }
 
-    @Override
-    public int compareTo(Person o) {
-        return name.compareTo(o.getName());
-    }
+    //    @Override
+//    public int compareTo(Person o) {
+//        return name.compareTo(o.getName());
+//    }
+
 }

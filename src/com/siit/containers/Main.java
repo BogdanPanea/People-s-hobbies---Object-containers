@@ -6,219 +6,136 @@ public class Main {
 
     public static void main(String... args) {
 
-        // array example
-        Person[] people = new Person[3];
         Person mia = new Employee("mia", 30);
-        List<String> hobbies = new ArrayList<>();
-        hobbies.add("reading");
-        hobbies.add("running");
-        mia.setHobbies(hobbies);
+        List<String> hobbiesMia = new ArrayList<>();
+        hobbiesMia.add("reading");
+        hobbiesMia.add("running");
+        mia.setHobbies(hobbiesMia);
         mia.setCNP("cnp1");
         Person rita = new Student("rita", 22);
+        List<String> hobbiesRita = new ArrayList<>();
+        hobbiesRita.add("sleeping");
+        hobbiesRita.add("swimming");
+        rita.setHobbies(hobbiesRita);
         rita.setCNP("cnp2");
         Person rares = new Unemployed("rares", 33);
-        rares.setCNP("cnp2");
+        List<String> hobbiesRares = new ArrayList<>();
+        hobbiesRares.add("biking");
+        hobbiesRares.add("skiing");
+        rita.setHobbies(hobbiesRares);
+        rares.setCNP("cnp3");
 
+        List<Person> people = new ArrayList<>();
+        people.add(mia);
+        people.add(rita);
+        people.add(rares);
 
-        people[0] = mia;
-        people[1] = rita;
-        people[2] = rares;
+        treeSet(mia, rita, rares, people);
 
+        Person bia = new Employee("bia", 18);
+        Person bob = new Student("bob", 20);
+        Person dani = new Unemployed("dani", 27);
 
-        // ArrayList example
-        List<Person> people1 = new ArrayList<>();
-        people1.add(mia);
-        people1.add(rita);
-        people1.add(rares);
-
-
-        System.out.println("----- ArrayList -----");
-        for (Person person : people1) {
-            System.out.println(person.getName());
-        }
-
-
-        System.out.println();
-        System.out.println("----- iterate using iterator -----");
-        Iterator<Person> personIterator = people1.iterator();
-        while (personIterator.hasNext()) {
-            Person person = personIterator.next();
-            System.out.println(person.getName());
-        }
-
-
-        System.out.println("-----iterate using position---");
-        for (int i = 0; i < people1.size(); i++) {
-            System.out.println(people1.get(i).getName());
-        }
-
-        setExample(mia, rita, rares);
-
-        mapExample(mia, rita, rares);
-
-        treeSetExample(mia, rita, rares, people1);
-
-        queueExample(mia, rita, rares);
-
-        removeInts();
+        hashMap(bia, bob, dani);
 
     }
 
-    private static void queueExample(Person mia, Person rita, Person rares) {
-        System.out.println();
-        System.out.println("-------QUEUE--------");
+    private static void treeSet(Person mia, Person rita, Person rares, List<Person> people) {
 
-        LinkedList<Person> linkedList = new LinkedList<>();
-        linkedList.add(mia);
-        linkedList.add(rita);
-        linkedList.add(rares);
-
-        System.out.println(linkedList);
-
-        int maxAge = 0;
-        Person oldest = null;
-        if (linkedList.size() >= 3) {
-            for (Person p : linkedList) {
-                if (p.getAge() > maxAge) {
-                    maxAge = p.getAge();
-                    oldest = p;
-                }
-            }
-        }
-        System.out.println(linkedList);
-        linkedList.removeFirstOccurrence(oldest);
-        linkedList.addFirst(oldest);
-
-        System.out.println(linkedList);
-    }
-
-    private static void treeSetExample(Person mia, Person rita, Person rares, List<Person> people1) {
-        System.out.println();
-        System.out.println("---- TREE SET ----");
-        Set<Person> peopleOrderedByName = new TreeSet<>();
+        Set<Person> peopleOrderedByName = new TreeSet<>(new NameComparator());
         peopleOrderedByName.add(rita);
         peopleOrderedByName.add(mia);
         peopleOrderedByName.add(rares);
+
+        Set<Person> peopleOrderedByAge = new TreeSet<>(new AgeComparator());
+        peopleOrderedByAge.add(rita);
+        peopleOrderedByAge.add(mia);
+        peopleOrderedByAge.add(rares);
+
+        System.out.println("---- TREE SET ----");
+
+        System.out.println();
+
+        System.out.println("Before sort");
+        System.out.println();
+        System.out.println(people);
+        System.out.println();
+        System.out.println("----------------------------");
+        System.out.println();
+
+        System.out.println("After sort by name");
+        System.out.println();
         System.out.println(peopleOrderedByName);
-
-
-        System.out.println("before sort");
-        System.out.println(people1);
-        Collections.sort(people1, new Comparator<Person>() {
-            @Override
-            public int compare(Person p1, Person p2) {
-                return p1.getName().compareTo(p2.getName());
-            }
-        });
-
-        System.out.println("after sort");
-        System.out.println(people1);
-    }
-
-    private static void mapExample(Person mia, Person rita, Person rares) {
         System.out.println();
-        System.out.println("-------MAP--------");
-        Map<String, Person> peopleByNicknames = new HashMap<>();
-        peopleByNicknames.put("morcoveata", rita);
-        peopleByNicknames.put("isoscel", mia);
-        peopleByNicknames.put("patratel", rares);
-        for (String key : peopleByNicknames.keySet()) {
-            System.out.println(peopleByNicknames.get(key));
-        }
-
-        for (Person person : peopleByNicknames.values()) {
-            System.out.println(person);
-        }
-
-        for (Map.Entry<String, Person> entry : peopleByNicknames.entrySet()) {
-            System.out.println(entry);
-        }
-
-        peopleByNicknames.clear();
-    }
-
-    private static void setExample(Person mia, Person rita, Person rares) {
-        Set<Person> peopleAsSet = new HashSet<>();
-        peopleAsSet.add(mia);
-        peopleAsSet.add(rita);
-        peopleAsSet.add(rares);
-
+        System.out.println("----------------------------");
         System.out.println();
-        System.out.println("-------SET------");
-        for (Person person : peopleAsSet) {
-            System.out.println(person.getName());
-        }
 
-        List<Integer> numbers = new ArrayList<>();
-        numbers.add(5);
-        numbers.add(8);
-        numbers.add(3);
-        numbers.add(1);
-        numbers.add(10);
-        numbers.add(14);
+        System.out.println("After sort by age");
+        System.out.println();
+        System.out.println(peopleOrderedByAge);
+        System.out.println();
+        System.out.println("----------------------------");
+        System.out.println();
 
-        int sum = 0;
-        int prod = 1;
-
-        for (int i = 0; i < numbers.size(); i++) {
-            if (i % 2 == 0) {
-                sum += numbers.get(i);
-            }
-            if (numbers.get(i) % 2 != 0) {
-                prod *= numbers.get(i);
-            }
-        }
-
-        System.out.println("sum : " + sum + " prod:" + prod);
-
-
-        Integer[] nrs = {1, 2, 3};
-        Arrays.asList(nrs);
     }
 
+    private static void hashMap(Person bia, Person bob, Person dani) {
 
-    public static void removeInts() {
-        List<Integer> numbers = new ArrayList<>();
-        numbers.add(1);
-        numbers.add(0);
-        numbers.add(3);
-        numbers.add(5);
-        numbers.add(0);
-        numbers.add(8);
-        numbers.add(13);
-        numbers.add(0);
+        Address address1 = new Address("Romania");
+        Address address2 = new Address("Rusia");
+        Address address3 = new Address("Bulgaria");
+        Address address4 = new Address("Moldova");
+        Address address5 = new Address("Spania");
 
-        // expected result: 3,8
 
-        Iterator<Integer> it = numbers.iterator();
-        List<Integer> positionsToRemove = new ArrayList<>();
+        List<Address> readingAddreses = new ArrayList<>(Arrays.asList(address1, address2, address3));
+        List<Address> sleepingAddreses = new ArrayList<>(Arrays.asList(address1, address3, address4));
+        List<Address> runningAddreses = new ArrayList<>(Arrays.asList(address2, address3, address4));
+        List<Address> swimmingAddreses = new ArrayList<>(Arrays.asList(address1, address2, address3, address4));
+        List<Address> bikingAddreses = new ArrayList<>(Arrays.asList(address3, address4, address5));
+        List<Address> skiingAddreses = new ArrayList<>(Arrays.asList(address1, address2, address3, address4, address5));
 
-        int i = 0;
-        int nrOfRemovals = 0;
-        int poz = 0;
-        while (it.hasNext()) {
-            int next = it.next();
-            if (next == 0) {
-                it.remove();
+        List<Hobby> biaHobbies = new ArrayList<>();
+        biaHobbies.add(new Hobby("reading", 4, readingAddreses));
+        biaHobbies.add(new Hobby("running", 3, runningAddreses));
+        biaHobbies.add(new Hobby("biking", 2, bikingAddreses));
 
-                i = poz - nrOfRemovals * 2 - 1;
-                positionsToRemove.add(i);
+        List<Hobby> bobHobbies = new ArrayList<>();
+        bobHobbies.add(new Hobby("reading", 2, readingAddreses));
+        bobHobbies.add(new Hobby("skiing", 1, skiingAddreses));
+        bobHobbies.add(new Hobby("biking", 1, bikingAddreses));
 
-                nrOfRemovals++;
-            }
-            poz++;
-        }
+        List<Hobby> daniHobbies = new ArrayList<>();
+        daniHobbies.add(new Hobby("sleeping", 7, sleepingAddreses));
+        daniHobbies.add(new Hobby("swimming", 2, swimmingAddreses));
+        daniHobbies.add(new Hobby("biking", 1, bikingAddreses));
 
-        System.out.println(numbers);
-        System.out.println(Arrays.asList(positionsToRemove));
-        for (Integer pos : positionsToRemove) {
-            if (pos != null) {
-                numbers.remove((int) pos);
-            } else {
-                break;
-            }
-        }
 
-        System.out.println(numbers);
+        Map<Person, List<Hobby>> personsWithHobbies = new HashMap<>();
+        personsWithHobbies.put(bia, biaHobbies);
+        personsWithHobbies.put(bob, bobHobbies);
+        personsWithHobbies.put(dani, daniHobbies);
+
+        System.out.println("-------------HashMap---------------");
+        System.out.println();
+        System.out.println("Person info");
+        System.out.println();
+        System.out.println(bia);
+        System.out.println("Person hobbies information");
+        System.out.println();
+        System.out.println(personsWithHobbies.get(bia));
+
+//        for (Map.Entry<Person, List<Hobby>> entry : personsWithHobbies.entrySet()) {
+//            Person key = entry.getKey();
+//            List<Hobby> value = entry.getValue();
+//            if(bob.equals( key )) {
+//
+//                System.out.println( key );
+//                System.out.println( value );
+//            }
+//        }
+
+
     }
+
 }
